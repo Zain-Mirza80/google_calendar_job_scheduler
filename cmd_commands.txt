@@ -1,0 +1,112 @@
+Step 1 -  Create backend
+
+    Create new env
+        python -m venv venv
+
+    Activate env
+        venv/Scripts/activate
+
+    Install requirements.txt
+        pip install -r requirements.txt
+
+    Create Django project folder
+        django-admin startproject backend
+
+    Create Django app (cd into backend folder first)
+        python manage.py startapp api
+
+
+
+
+Step 2 - Configure settings
+    Add these imports at the top:
+        from datetime import timedelta
+        from dotenv import load_dotenv
+        import os
+
+    Add this under the imports:
+        load_dotenv()
+    
+    Change ALLOWED_HOSTS to read:
+        ALLOWED_HOSTS = ["*"]
+    
+    Add this under ALLOWED_HOSTS = ["*"]:
+        REST_FRAMEWORK = {
+            "DEFAULT_AUTHENTICATION_CLASSES": (
+                "rest_framework_simplejwt.authentication.JWTAuthentication",
+            ),
+            "DEFAULT_PERMISSION_CLASSES": [
+                "rest_framework.permissions.IsAuthenticated",
+            ],
+        }
+
+        SIMPLE_JWT = {
+            "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+            "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+        }
+
+    Go to INSTALLED_APPS and add "rest_framework", "corsheaders", "api" and any other apps
+    
+    Go to MIDDLEWARE and add 'corsheaders.middleware.CorsMiddleware' to the third line
+
+    Add this at the bottom of the page:
+        CORS_ALLOW_ALL_ORIGINS = True
+        CORS_ALLOW_CREDENTIALS = True
+    
+
+
+
+Step 3 - Create models, create/make migrations and apply migrations
+
+    Create migrations
+        python manage.py makemigrations
+
+    Apply migrations
+        python manage.py migrate
+
+
+Step 4 - Register / hook models into Django admin panel, create super user, and view models in dango admin
+    
+    Register / hook models into Django admin panel
+        from .models import TaskList, Task
+
+        admin.site.register(TaskList)
+        admin.site.register(Task)
+
+    Create super user
+        python manage.py createsuperuser
+
+    Run server
+        python manage.py runserver
+
+    Log into admin panel by searching:
+        http://127.0.0.1:8000/admin/
+
+    Experiment with the models, see if they behave as you expected
+
+    
+
+
+
+
+Step 5 - Complete the serializers, views and urls
+
+
+
+
+
+Step 6 - Setup frontend
+    
+    Create react project
+        npm create vite@latest frontend -- --template react
+
+    Install some other react stuff
+        npm install axios
+        npm install react-router-dom
+        npm install jwt-decode
+
+        
+
+
+
+Step 7 - Setup api.js, .env, constants, form for regisering and login, protected route
