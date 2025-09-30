@@ -17,6 +17,7 @@ class Job(models.Model):
     address = models.TextField()
     date = models.DateTimeField()
     description = models.CharField(max_length=60)
+    is_scheduled = models.BooleanField(default=False)
     # images = models.ImageField(upload_to="job_images/", blank=True, null=True)
 
     def __str__(self):
