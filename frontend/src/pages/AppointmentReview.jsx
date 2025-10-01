@@ -17,14 +17,14 @@ function AppointmentReview () {
     useEffect(() => {fetchAppointments()}, [])
 
     const handleRemoveAppointment = (id) => {
-        // setAppointments((prev) => prev.filter((appt) => appt.id !== id))
+        setAppointments((prev) => prev.filter((appt) => appt.id !== id))
         console.log("handleremove has been called!!")
     }
 
 
     return(
         <>
-            <h1 style={{marginTop: "80px", textAlign: "center"}}>Review your appointments below for scheduling</h1>
+            <h2 style={{marginTop: "80px", textAlign: "center"}}>Review your appointments below for scheduling</h2>
             <div
                 style={{
                     marginTop: "32px",
