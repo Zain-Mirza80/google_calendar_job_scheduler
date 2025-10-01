@@ -24,7 +24,7 @@ function AppointmentCard({data, onApproved}) {
 
   const handleApprove = async () => {
     console.log("Before approve")
-    const res = await api.post(`/api/job/${appointment.id}/approve`, appointment)
+    const res = await api.post(`/api/job/${appointment.id}/approve/`, appointment)
     console.log("After approve")
     if (onApproved) {
         onApproved(appointment.id)

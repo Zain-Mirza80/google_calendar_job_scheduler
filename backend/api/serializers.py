@@ -7,18 +7,17 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password"]
-        extra_kwargs = {"password": {"write_only": True}}
+        extra_kwargs = {"password": {"write_only": True}}  # don’t expose password
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
-    
+        return User.objects.create_user(**validated_data)
+
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = "__all__"
-        # no session field since we’re keeping it simple
+        # we’re not linking jobs directly to sessions in this simplified version
 
 
 class SessionLinkSerializer(serializers.ModelSerializer):

@@ -4,9 +4,9 @@ from api.views import CreateUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),       # Django admin panel
+    path("admin/", admin.site.urls),                         # Django admin panel
     path("api/user/register/", CreateUserView.as_view(), name="register"),
     path("api/token/", TokenObtainPairView.as_view(), name="get_token"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
-    path("api/", include("api.urls")),     # All your API endpoints
+    path("api/", include("api.urls")),                       # Include app-level API endpoints
 ]

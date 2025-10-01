@@ -8,6 +8,11 @@ import AppointmentForm from "./pages/AppointmentForm";
 import AppointmentReview from "./pages/AppointmentReview";
 import AppointmentSuccess from "./pages/AppointmentSuccess";
 
+// Session booking flow
+import AppointmentFormStandalone from "./pages/AppointmentFormStandalone";
+import SessionLinkGenerator from "./pages/SessionLinkGenerator";
+import SessionExpired from "./pages/SessionExpired";
+
 function Logout() {
   localStorage.clear();
   return <Navigate to="/" />;
@@ -22,11 +27,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
+        {/* Public auth routes */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/logout" element={<Logout />} />
-        
+        <Route path="/appointment_success" element={<AppointmentSuccess />} />
+
+        {/* Public standalone booking via session link */}
+        <Route path="/book/:token" element={<AppointmentFormStandalone />} />
+        <Route path="/session-expired" element={<SessionExpired />} />
 
         {/* Protected parent (Layout is wrapped in ProtectedRoute) */}
         <Route
@@ -37,11 +46,12 @@ function App() {
           }
         >
           <Route path="/home" element={<Home />} />
-          <Route path="/appointment_booking" element={<AppointmentForm />} />
+          {/* <Route path="/appointment_booking" element={<AppointmentForm />} /> */}
           <Route path="/appointment_review" element={<AppointmentReview />} />
-          <Route path="/appointment_success" element={<AppointmentSuccess />} />
+          
 
-          {/* future protected routes go here */}
+          {/* Plumber-only route to generate links */}
+          <Route path="/generate-session" element={<SessionLinkGenerator />} />
         </Route>
       </Routes>
     </BrowserRouter>

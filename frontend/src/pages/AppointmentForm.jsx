@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
-function AppointmentForm() {
+function AppointmentForm({ onSubmit, sessionToken}) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -28,15 +28,33 @@ function AppointmentForm() {
     event.preventDefault();
 
     try {
-      console.log("Submitting appointment");
-      const response = await api.post("/api/job/create/", formData);
-      console.log("Appointment created", response);
-      navigate("/appointment_success");
-    } catch (error) {
-      console.error("Appointment submission failed", error);
-    }
-  };
+        if (onSubmit) {
+        // If a parent provided a custom handler (e.g. session booking)
+        await onSubmit(formData);
+        } else if (sessionToken) {
+        // Session-based booking flow
+        console.log("Submitting appointment via session link");
+        const response = await api.post(`/api/session/${sessionToken}/book/`, formData);
+        console.log("Appointment created (session)", response);
 
+        // Optionally mark session as used (depends on backend setup)
+        await api.post(`/api/session/${sessionToken}/use/`);
+
+        navigate("/appointment_success");
+        } else {
+        // Default flow: normal appointment booking
+        console.log("Submitting appointment (default flow)");
+        const response = await api.post("/api/job/create/", formData);
+        console.log("Appointment created", response);
+        navigate("/appointment_success");
+        }
+    } catch (error) {
+        console.error("Appointment submission failed", error);
+    }
+    };
+
+
+  // --- styles unchanged ---
   const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(180deg, #f5f7ff 0%, #ffffff 80%)",
@@ -74,13 +92,6 @@ function AppointmentForm() {
     fontSize: "32px",
     color: "#1d1d1f",
     fontWeight: 700,
-  };
-
-  const subtitleStyle = {
-    margin: 0,
-    fontSize: "16px",
-    color: "#5f6368",
-    lineHeight: 1.6,
   };
 
   const formCardStyle = {
@@ -165,19 +176,12 @@ function AppointmentForm() {
     transition: "transform 0.2s ease, box-shadow 0.2s ease",
   };
 
-  const noteStyle = {
-    fontSize: "13px",
-    color: "#7e859f",
-    lineHeight: 1.5,
-  };
-
   return (
     <div style={pageStyle}>
       <section style={containerStyle}>
         <header style={headerStyle}>
           <span style={badgeStyle}>Topflow Services</span>
           <h1 style={titleStyle}>Book Your Appointment</h1>
-          
         </header>
 
         <form
@@ -301,7 +305,9 @@ function AppointmentForm() {
                   style={{ border: "none", background: "transparent", padding: 0 }}
                 />
               </div>
-              <span style={helperTextStyle}>Attach a photo to help us prepare the right tools.</span>
+              <span style={helperTextStyle}>
+                Attach a photo to help us prepare the right tools.
+              </span>
             </div>
           </div>
 
@@ -309,7 +315,6 @@ function AppointmentForm() {
             <button type="submit" style={buttonStyle}>
               Book Appointment
             </button>
-            
           </footer>
         </form>
       </section>

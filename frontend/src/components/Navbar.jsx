@@ -38,8 +38,9 @@ function Navbar() {
       }}
     >
       <NavLink to="/home" style={linkStyle}>Home</NavLink>
-      <NavLink to="/appointment_booking" style={linkStyle}>Appointment Booking</NavLink>
+      {/* <NavLink to="/appointment_booking" style={linkStyle}>Appointment Booking</NavLink> */}
       <NavLink to="/appointment_review" style={linkStyle}>Appointment Review</NavLink>
+      <NavLink to="/generate-session" style={linkStyle}>Session Link Generator</NavLink>
     
       
       {/* logout pushed to far right */}
