@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password"]
-        extra_kwargs = {"password": {"write_only": True}} # ensures password is only serialized on creation not on return of the data
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -18,4 +18,11 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = "__all__"
-        # read_only_fields = ["session"]
+        # no session field since we’re keeping it simple
+
+
+class SessionLinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SessionLink
+        fields = ["id", "token", "created_at", "expires_at", "is_used"]
+        read_only_fields = ["id", "token", "created_at", "expires_at", "is_used"]
