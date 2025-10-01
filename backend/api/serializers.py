@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from models import Job, SessionLink
+from .models import Job, SessionLink
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,4 +18,4 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = "__all__"
-        read_only_fields = ["session"]
+        # read_only_fields = ["session"]

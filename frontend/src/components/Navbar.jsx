@@ -38,7 +38,9 @@ function Navbar() {
       }}
     >
       <NavLink to="/home" style={linkStyle}>Home</NavLink>
-      <NavLink to="/test" style={linkStyle}>Test</NavLink>
+      <NavLink to="/appointment_booking" style={linkStyle}>Appointment Booking</NavLink>
+      <NavLink to="/appointment_review" style={linkStyle}>Appointment Review</NavLink>
+    
       
       {/* logout pushed to far right */}
       <NavLink to="/logout" style={logoutStyle}>Logout</NavLink>

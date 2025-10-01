@@ -4,7 +4,8 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
-import Test from "./pages/Test";
+import AppointmentForm from "./pages/AppointmentForm";
+import AppointmentReview from "./pages/AppointmentReview";
 
 function Logout() {
   localStorage.clear();
@@ -35,7 +36,8 @@ function App() {
           }
         >
           <Route path="/home" element={<Home />} />
-          <Route path="/test" element={<Test />} />  
+          <Route path="/appointment_booking" element={<AppointmentForm />} />
+          <Route path="/appointment_review" element={<AppointmentReview />} />  
 
           {/* future protected routes go here */}
         </Route>
