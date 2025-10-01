@@ -16,6 +16,11 @@ function AppointmentReview () {
 
     useEffect(() => {fetchAppointments()}, [])
 
+    const handleRemoveAppointment = (id) => {
+        // setAppointments((prev) => prev.filter((appt) => appt.id !== id))
+        console.log("handleremove has been called!!")
+    }
+
 
     return(
         <>
@@ -33,6 +38,7 @@ function AppointmentReview () {
                     <AppointmentCard
                         key={appointment.id ?? appointment.email ?? index}
                         data={appointment}
+                        onApproved={handleRemoveAppointment}
                     />
                 ))}
             </div>

@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+import api from "../api";
+
+
+
 function formatDateTime(datetime) {
   if (!datetime) {
     return "Not set";
@@ -14,8 +19,21 @@ function formatDateTime(datetime) {
   }).format(date);
 }
 
-function AppointmentCard(props) {
-  const appointment = props.data ?? props;
+function AppointmentCard({data, onApproved}) {
+  const appointment = data
+
+  const handleApprove = async () => {
+    console.log("Before approve")
+    const res = await api.post(`/api/job/${appointment.id}/approve`, appointment)
+    console.log("After approve")
+    if (onApproved) {
+        onApproved(appointment.id)
+    }
+}
+
+    
+
+
   const {
     name = "Unnamed",
     email = "No email provided",
@@ -126,6 +144,7 @@ function AppointmentCard(props) {
             backgroundColor: "#e8f5e9",
             color: "#1b5e20",
           }}
+          onClick={handleApprove}
         >
           ✓ Approve
         </button>
